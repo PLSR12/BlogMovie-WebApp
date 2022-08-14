@@ -1,10 +1,10 @@
 const paths = {
   Home: '/',
+  Login: '/login',
   OneArticle: '/article/:id',
-  Articles: '/admin-articles',
-  NewArticles: '/nova-article',
-  EditArticles: '/editar-article',
-  NewCategory: '/nova-categoria',
+  AdminArticles: '/admin-articles',
+  NewArticles: '/new-article',
+  NewCategory: '/new-category',
 }
 
 export default paths
