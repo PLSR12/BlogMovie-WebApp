@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect } from 'react'
 import { ProSidebar, Menu, MenuItem } from 'react-pro-sidebar'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 import 'react-pro-sidebar/dist/css/styles.css'
 import { SideBarNavContext } from '../../../context/sideBarNavContext'
@@ -18,14 +18,21 @@ import { navBar } from './menu-list'
 
 export function SideMenuAdmin() {
   const { isColapsed, setIsColapsed } = useContext(SideBarNavContext)
-
   const [navBarMenu, setNavBarMenu] = useState<any>({})
-
   const { pathname } = window.location
+  const { push } = useHistory()
 
   useEffect(() => {
     setNavBarMenu(navBar)
   }, [])
+
+  const logout = async () => {
+    await localStorage.removeItem('blogmovie:userData')
+
+    setTimeout(() => {
+      push('/login')
+    }, 1000)
+  }
 
   return (
     <ContainerSideNav collapsed={isColapsed}>
@@ -51,6 +58,7 @@ export function SideMenuAdmin() {
             </MenuItem>
           ))}
         </Menu>
+        <button onClick={() => logout()}> LOGOUT </button>
       </ProSidebar>
     </ContainerSideNav>
   )

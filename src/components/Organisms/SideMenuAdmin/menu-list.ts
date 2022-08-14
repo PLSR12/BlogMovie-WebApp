@@ -9,41 +9,21 @@ export const navBar = {
   menu: [
     {
       icon: NewspaperIcon,
-      pathname: 'admin-noticias',
+      pathname: 'admin-articles',
       label: 'Listar Notícias',
-      link: paths.Articles,
+      link: paths.AdminArticles,
     },
     {
       icon: FiberNewIcon,
-      pathname: 'nova-noticia',
+      pathname: 'new-article',
       label: 'Nova Notícia',
       link: paths.NewArticles,
     },
     {
       icon: IconDashboard,
-      pathname: 'nova-categoria',
+      pathname: 'new-category',
       label: 'Nova Categoria',
       link: paths.NewCategory,
     },
   ],
 }
-
-const listLinks = [
-  {
-    id: 1,
-    label: 'Listar Noticias',
-    link: paths.Articles,
-  },
-  {
-    id: 2,
-    label: 'Nova Noticia',
-    link: paths.NewArticles,
-  },
-  {
-    id: 3,
-    label: 'Nova Categoria',
-    link: paths.NewCategory,
-  },
-]
-
-export default listLinks
