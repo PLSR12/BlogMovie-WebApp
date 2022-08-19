@@ -2,7 +2,7 @@ import { HttpService } from './http.service'
 
 const basePath = '/article'
 
-export const CategoryService = {
+export const ArticlesService = {
   getAll,
   insert,
   update,
@@ -35,4 +35,4 @@ async function getById(id: any) {
   return HttpService.get(`${basePath}/${id}`)
 }
 
-export default CategoryService
+export default ArticlesService
