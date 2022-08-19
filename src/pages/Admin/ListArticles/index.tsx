@@ -1,18 +1,19 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
-import tableIcons from 'common/styles/MaterialTableIcons'
 import Edit from '@material-ui/icons/Edit'
+import tableIcons from 'common/styles/MaterialTableIcons'
 
 import GenericModal from 'components/Organisms/Modal/GenericModal'
 import { ModalContentLoading } from 'components/Organisms/Modal/style'
 
 import { ArticlesAll } from 'models/IArticles'
 import ArticlesService from 'services/Articles.service'
+import { ToastService } from 'services/toast.service'
 
-import { ContainerTable } from './styles'
 import DeleteOutline from '@material-ui/icons/DeleteOutline'
 import Modal from 'components/Organisms/Modal'
+import * as S from './styles'
 
 const MaterialTable = require('material-table').default
 
@@ -20,8 +21,9 @@ export default function ListArticles() {
   const [articles, setArticles] = useState<ArticlesAll[]>([])
   const [articleSelected, setArticleSelected] = useState<number>()
   const [modalLoadingIsOpen, setModalLoadingIsOpen] = useState<boolean>(true)
-  const [modalConfirmDeleteIsOpen, setModalConfirmDeleteIsOpen] =
-    useState<boolean>(false)
+  const [modalConfirmDeleteIsOpen, setModalConfirmDeleteIsOpen] = useState<
+    boolean
+  >(false)
   const { push } = useHistory()
 
   const titleModalDelete = 'Excluir Artigo'
@@ -30,12 +32,16 @@ export default function ListArticles() {
 
   useEffect(() => {
     async function loadArticle() {
-      const { data: allArticles } = await ArticlesService.getAll().then(
-        (response: any) => response
-      )
+      try {
+        const allArticles = await ArticlesService.getAll().then(
+          (response: any) => response
+        )
 
-      setArticles(allArticles)
-      setModalLoadingIsOpen(false)
+        setArticles(allArticles)
+        setModalLoadingIsOpen(false)
+      } catch (error) {
+        ToastService.error('Erro ao listar Artigos,tente novamente mais tarde')
+      }
     }
     loadArticle()
   }, [])
@@ -101,7 +107,7 @@ export default function ListArticles() {
         handleYes={handleModalConfirmDeleteYes}
         textYes="Sim, excluir"
       />
-      <ContainerTable>
+      <S.ContainerTable>
         <MaterialTable
           data={articles}
           loading={false}
@@ -163,7 +169,7 @@ export default function ListArticles() {
             },
           }}
         />
-      </ContainerTable>
+      </S.ContainerTable>
     </>
   )
 }
