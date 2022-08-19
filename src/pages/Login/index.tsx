@@ -1,13 +1,14 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useHistory } from 'react-router-dom'
 import { MdEmail, MdLock, MdVisibility, MdVisibilityOff } from 'react-icons/md'
+import { useHistory } from 'react-router-dom'
 
 import { LogInSchema } from './validations'
 
-import * as S from './styles'
 import AuthService from 'services/Auth.service'
+import { ToastService } from 'services/toast.service'
+import * as S from './styles'
 
 interface UserDataInput {
   email: string
@@ -15,8 +16,8 @@ interface UserDataInput {
 }
 
 export function Login() {
-  const [showPassword, setShowPassword] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const history = useHistory()
 
   const {
@@ -28,14 +29,19 @@ export function Login() {
   })
 
   const onSubmit = async (data: UserDataInput) => {
-    await AuthService.signIn({
-      email: data.email,
-      password: data.password,
-    })
+    try {
+      await AuthService.signIn({
+        email: data.email,
+        password: data.password,
+      })
 
-    setTimeout(() => {
-      history.push('/admin-articles')
-    }, 3000)
+      ToastService.success('Login realizado com sucesso')
+      setTimeout(() => {
+        history.push('/admin-articles')
+      }, 3000)
+    } catch (err) {
+      ToastService.error('Erro ao realizar Login,tente novamente mais tarde')
+    }
   }
 
   const handleShowPassword = () => {

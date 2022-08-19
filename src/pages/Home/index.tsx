@@ -1,14 +1,18 @@
-import React, { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import * as S from './styles'
 
 import * as Templates from 'components/Templates'
 
-import { CategoriesAll } from 'models/ICategories'
-import { ArticlesAll } from 'models/IArticles'
+import GenericModal from 'components/Organisms/Modal/GenericModal'
+import { ModalContentLoading } from 'components/Organisms/Modal/style'
 
-import CategoryService from 'services/Categories.service'
+import { ArticlesAll } from 'models/IArticles'
+import { CategoriesAll } from 'models/ICategories'
+
 import ArticlesService from 'services/Articles.service'
+import CategoryService from 'services/Categories.service'
+import { ToastService } from 'services/toast.service'
 
 export function Home({ state }: any) {
   let categoryId = 0
@@ -19,27 +23,42 @@ export function Home({ state }: any) {
   const [categories, setCategories] = useState<CategoriesAll[]>()
   const [filteredArticles, setFilteredArticles] = useState<ArticlesAll[]>([])
   const [activeCategories, setActiveCategorie] = useState<number>(categoryId)
+  const [modalLoadingIsOpen, setModalLoadingIsOpen] = useState<boolean>(true)
 
   useEffect(() => {
     async function loadCategory() {
-      const { data: allCategories } = await CategoryService.getAll().then(
-        (response: any) => response
-      )
+      try {
+        const allCategories = await CategoryService.getAll().then(
+          (response: any) => response
+        )
 
-      const newCategory = [{ id: 0, name: 'Todas' }, ...allCategories]
+        const newCategory = [{ id: 0, name: 'Todas' }, ...allCategories]
 
-      setCategories(newCategory)
+        setCategories(newCategory)
+        setModalLoadingIsOpen(false)
+      } catch (error) {
+        ToastService.error(
+          'Erro ao buscar as Categorias,tente novamente mais tarde'
+        )
+      }
     }
 
     async function loadArticle() {
-      const { data: allArticles } = await ArticlesService.getAll().then(
-        (response: any) => response
-      )
+      try {
+        const allArticles = await ArticlesService.getAll().then(
+          (response: any) => response
+        )
 
-      setArticles(allArticles)
+        setArticles(allArticles)
+        setModalLoadingIsOpen(false)
+      } catch (error) {
+        ToastService.error(
+          'Erro ao buscar os Artigos,tente novamente mais tarde'
+        )
+      }
     }
-    loadCategory()
     loadArticle()
+    loadCategory()
   }, [])
 
   useEffect(() => {
@@ -56,28 +75,35 @@ export function Home({ state }: any) {
   }, [activeCategories, articles])
 
   return (
-    <S.Container>
-      <S.CategoriesMenu>
-        {categories &&
-          categories.map((category: { id: any; name: string }) => (
-            <S.CategoryButton
-              type="button"
-              key={category.id}
-              isActiveBrand={activeCategories === category.id}
-              onClick={() => {
-                setActiveCategorie(category.id)
-              }}
-            >
-              {category.name}
-            </S.CategoryButton>
-          ))}
-      </S.CategoriesMenu>
-      <S.ArticlesContainer>
-        {filteredArticles &&
-          filteredArticles.map((article: { id: number }) => (
-            <Templates.CardArticle key={article.id} article={article} />
-          ))}
-      </S.ArticlesContainer>
-    </S.Container>
+    <>
+      <GenericModal isOpen={modalLoadingIsOpen}>
+        <ModalContentLoading>
+          <h2>Carregando...</h2>
+        </ModalContentLoading>
+      </GenericModal>
+      <S.Container>
+        <S.CategoriesMenu>
+          {categories &&
+            categories.map((category: { id: any; name: string }) => (
+              <S.CategoryButton
+                type="button"
+                key={category.id}
+                isActiveBrand={activeCategories === category.id}
+                onClick={() => {
+                  setActiveCategorie(category.id)
+                }}
+              >
+                {category.name}
+              </S.CategoryButton>
+            ))}
+        </S.CategoriesMenu>
+        <S.ArticlesContainer>
+          {filteredArticles &&
+            filteredArticles.map((article: { id: number }) => (
+              <Templates.CardArticle key={article.id} article={article} />
+            ))}
+        </S.ArticlesContainer>
+      </S.Container>
+    </>
   )
 }
