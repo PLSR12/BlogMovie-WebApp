@@ -1,6 +1,6 @@
-import { Switch, Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 
-import { Home, Article, Admin, Login } from '../pages'
+import { Admin, Article, Home, Login } from '../pages'
 
 import paths from '../common/constants/paths'
 
@@ -14,6 +14,7 @@ export default function RoutesPath() {
       <Route exact path={paths.Login} component={Login} />
 
       <PrivateRoutes exact path={paths.AdminArticles} component={Admin} />
+      <PrivateRoutes exact path={paths.NewArticles} component={Admin} />
     </Switch>
   )
 }
