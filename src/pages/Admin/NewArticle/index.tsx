@@ -12,9 +12,9 @@ import * as Yup from 'yup'
 import GenericModal from 'components/Organisms/Modal/GenericModal'
 import { ModalContentLoading } from 'components/Organisms/Modal/style'
 
+import { ArticlesService } from 'services/Articles.service'
 import CategoryService from 'services/Categories.service'
 import { ToastService } from 'services/toast.service'
-import { ArticlesService } from './../../../services/Articles.service'
 import * as S from './styles'
 
 export default function NewArticles() {
@@ -42,14 +42,16 @@ export default function NewArticles() {
 
   const onSubmit = async (data: any) => {
     try {
-      await ArticlesService.insert({
-        title: data.title,
-        preview: data.preview,
-        content: data.content,
-        category_id: data.category.id,
-        file: data.file[0],
-      })
-      ToastService.success('Artigo criado realizado com sucesso')
+      const articleFormData = new FormData()
+
+      articleFormData.append('title', data.title)
+      articleFormData.append('preview', data.preview)
+      articleFormData.append('content', data.content)
+      articleFormData.append('category_id', data.category.id)
+      articleFormData.append('file', data.file[0])
+
+      await ArticlesService.insert(articleFormData)
+      ToastService.success('Artigo criado com sucesso')
       setTimeout(() => {
         history.push('/admin-articles')
       }, 3000)
