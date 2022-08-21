@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 import * as S from './styles'
 
-import * as Templates from 'components/Templates'
+import * as Molecules from 'components/Molecules'
 
 import GenericModal from 'components/Organisms/Modal/GenericModal'
 import { ModalContentLoading } from 'components/Organisms/Modal/style'
@@ -100,7 +100,7 @@ export function Home({ state }: any) {
         <S.ArticlesContainer>
           {filteredArticles &&
             filteredArticles.map((article: { id: number }) => (
-              <Templates.CardArticle key={article.id} article={article} />
+              <Molecules.CardArticle key={article.id} article={article} />
             ))}
         </S.ArticlesContainer>
       </S.Container>
