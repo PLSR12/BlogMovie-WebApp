@@ -1,53 +1,48 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import formatDate from 'common/utils/formatDate'
 import ArticlesService from 'services/Articles.service'
+import { ToastService } from 'services/toast.service'
 
-import {
-  Container,
-  ContentNotices,
-  NewsTitle,
-  NewsPreview,
-  ContainerImage,
-  DateNews,
-  NewsContent,
-} from './styles'
+import * as S from './styles'
 
 export function Article() {
   const [article, setArticle] = useState<any>([])
   const { id } = useParams<{ id: any }>()
 
   useEffect(() => {
-    async function loadArticle() {
-      const splitedId = id.split(':')[1]
+    async function oneArticle() {
+      try {
+        const splitedId = id.split(':')[1]
 
-      console.log(splitedId)
+        const OneArticle = await ArticlesService.getById(splitedId).then(
+          (response: any) => response
+        )
 
-      const { data: OneArticle } = await ArticlesService.getById(
-        splitedId
-      ).then((response: any) => response)
-
-      setArticle(OneArticle)
+        setArticle(OneArticle)
+      } catch (error) {
+        ToastService.error('Erro ao buscar artigo, tente novamente mais tarde')
+      }
     }
-    loadArticle()
+    oneArticle()
   }, [id])
 
   return (
     <>
-      <Container>
-        <ContentNotices>
-          <NewsTitle> {article.title}</NewsTitle>
-          <NewsPreview>{article.preview}</NewsPreview>
+      <S.Container>
+        <S.ContentNotices>
+          <S.NewsTitle> {article.title}</S.NewsTitle>
+          <S.NewsPreview>{article.preview}</S.NewsPreview>
           <div className="lineDate">
-            <DateNews> Criado em {formatDate(article.updatedAt)}</DateNews>
+            <S.DateNews> Criado em {formatDate(article.updatedAt)}</S.DateNews>
           </div>
-          <ContainerImage>
+          <S.ContainerImage>
             <img src={article.url} alt="imagem da notícia"></img>
-          </ContainerImage>
-          <NewsContent>{article.content}</NewsContent>
-        </ContentNotices>
-      </Container>
+          </S.ContainerImage>
+          <S.NewsContent>{article.content}</S.NewsContent>
+        </S.ContentNotices>
+      </S.Container>
     </>
   )
 }
