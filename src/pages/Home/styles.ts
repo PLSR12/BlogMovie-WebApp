@@ -34,4 +34,9 @@ export const ArticlesContainer = styled.div`
   align-items: center;
   gap: 5vw;
   padding: 3vw;
+
+  .nothing-notice {
+    font-size: 22px;
+    font-weight: bold;
+  }
 `
