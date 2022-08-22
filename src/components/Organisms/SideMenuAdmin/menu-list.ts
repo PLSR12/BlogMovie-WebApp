@@ -2,8 +2,8 @@ import paths from '../../../common/constants/paths'
 
 import { IconDashboard } from '../../Atoms/Icons'
 
-import NewspaperIcon from '@mui/icons-material/Newspaper'
 import FiberNewIcon from '@mui/icons-material/FiberNew'
+import NewspaperIcon from '@mui/icons-material/Newspaper'
 
 export const navBar = {
   menu: [
@@ -23,7 +23,7 @@ export const navBar = {
       icon: IconDashboard,
       pathname: 'new-category',
       label: 'Nova Categoria',
-      link: paths.NewCategory,
+      link: paths.NewCategories,
     },
   ],
 }
