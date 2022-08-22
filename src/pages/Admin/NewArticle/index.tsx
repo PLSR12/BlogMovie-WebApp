@@ -2,12 +2,12 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload'
 import * as Atoms from 'components/Atoms'
 import * as Organisms from 'components/Organisms'
+import { ArticlesInput } from 'models/IArticles'
 import { CategoriesAll } from 'models/ICategories'
 import { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { useHistory } from 'react-router-dom'
 import ReactSelect from 'react-select'
-import * as Yup from 'yup'
 
 import GenericModal from 'components/Organisms/Modal/GenericModal'
 import { ModalContentLoading } from 'components/Organisms/Modal/style'
@@ -16,6 +16,7 @@ import { ArticlesService } from 'services/Articles.service'
 import CategoryService from 'services/Categories.service'
 import { ToastService } from 'services/toast.service'
 import * as S from './styles'
+import { NewArticleSchema } from './validations'
 
 export default function NewArticles() {
   const [fileName, setFileName] = useState(null)
@@ -23,24 +24,14 @@ export default function NewArticles() {
   const [modalLoadingIsOpen, setModalLoadingIsOpen] = useState<boolean>(true)
   const history = useHistory()
 
-  const schema = Yup.object().shape({
-    title: Yup.string().required('O campo "nome" é obrigatório'),
-    preview: Yup.string().required('O campo "preview" é obrigatória'),
-    content: Yup.string().required('O campo "conteudo" é obrigatório'),
-    category: Yup.object().required('Escolha uma categoria'),
-    file: Yup.mixed().test('required', 'Carregue uma imagem', (value: any) => {
-      return value && value.length > 0
-    }),
-  })
-
   const {
     register,
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm({ resolver: yupResolver(schema) })
+  } = useForm<ArticlesInput>({ resolver: yupResolver(NewArticleSchema) })
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: ArticlesInput) => {
     try {
       const articleFormData = new FormData()
 
@@ -51,6 +42,7 @@ export default function NewArticles() {
       articleFormData.append('file', data.file[0])
 
       await ArticlesService.insert(articleFormData)
+
       ToastService.success('Artigo criado com sucesso')
       setTimeout(() => {
         history.push('/admin-articles')
