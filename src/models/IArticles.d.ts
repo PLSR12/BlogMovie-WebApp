@@ -1,12 +1,24 @@
 interface ArticlesAll {
   id: number
-  name: string
   title: string
   preview: string
   content: string
   category_id: number
   url: string
   category: ICategory[{}]
+}
+
+interface ArticlesInput {
+  name: string
+  title: string
+  preview: string
+  content: string
+  category_id: number
+  category: {
+    id: any
+    name: string
+  }
+  file: string
 }
 
 interface ICategory {
@@ -16,4 +28,4 @@ interface ICategory {
   path: string
 }
 
-export { ArticlesAll }
+export { ArticlesAll, ArticlesInput }

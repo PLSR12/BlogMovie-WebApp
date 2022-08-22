@@ -4,4 +4,9 @@ interface CategoriesAll {
   url: string
 }
 
-export { CategoriesAll }
+interface CategoriesInput {
+  name: string
+  file: string
+}
+
+export { CategoriesAll, CategoriesInput }
