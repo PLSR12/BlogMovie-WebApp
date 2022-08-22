@@ -97,7 +97,11 @@ export function Home({ state }: any) {
               </S.CategoryButton>
             ))}
         </S.CategoriesMenu>
+
         <S.ArticlesContainer>
+          {Object.keys(filteredArticles).length <= 0 && (
+            <p className="nothing-notice"> SEM ARTIGOS NESSA CATEGORIA </p>
+          )}
           {filteredArticles &&
             filteredArticles.map((article: { id: number }) => (
               <Molecules.CardArticle key={article.id} article={article} />
