@@ -4,7 +4,8 @@ const paths = {
   OneArticle: '/article/:id',
   AdminArticles: '/admin-articles',
   NewArticles: '/new-article',
-  NewCategory: '/new-category',
+  NewCategories: '/new-category',
+  EditArticle: '/edit-article/:id',
 }
 
 export default paths
