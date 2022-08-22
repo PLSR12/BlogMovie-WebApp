@@ -15,6 +15,8 @@ export default function RoutesPath() {
 
       <PrivateRoutes exact path={paths.AdminArticles} component={Admin} />
       <PrivateRoutes exact path={paths.NewArticles} component={Admin} />
+      <PrivateRoutes exact path={paths.NewCategories} component={Admin} />
+      <PrivateRoutes exact path={paths.EditArticle} component={Admin} />
     </Switch>
   )
 }
