@@ -6,7 +6,6 @@ import { CategoriesInput } from 'models/ICategories'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useHistory } from 'react-router-dom'
-import * as Yup from 'yup'
 
 import CategoryService from 'services/Categories.service'
 import { ToastService } from 'services/toast.service'
@@ -16,13 +15,6 @@ import { NewCategorySchema } from './validations'
 export default function NewCategories() {
   const [fileName, setFileName] = useState(null)
   const history = useHistory()
-
-  const schema = Yup.object().shape({
-    name: Yup.string().required('O campo "Nome" é obrigatório'),
-    file: Yup.mixed().test('required', 'Carregue uma imagem', (value: any) => {
-      return value && value.length > 0
-    }),
-  })
 
   const {
     register,
@@ -38,7 +30,7 @@ export default function NewCategories() {
       categoryFormData.append('file', data.file[0])
 
       await CategoryService.insert(categoryFormData)
-      ToastService.success('Categoria criado com sucesso')
+      ToastService.success('Categoria criada com sucesso')
       setTimeout(() => {
         history.push('/admin-articles')
       }, 3000)
