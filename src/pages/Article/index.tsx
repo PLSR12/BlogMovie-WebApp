@@ -5,10 +5,15 @@ import formatDate from 'common/utils/formatDate'
 import ArticlesService from 'services/Articles.service'
 import { ToastService } from 'services/toast.service'
 
+import GenericModal from 'components/Organisms/Modal/GenericModal'
+import { ModalContentLoading } from 'components/Organisms/Modal/style'
+
 import * as S from './styles'
 
 export function Article() {
   const [article, setArticle] = useState<any>([])
+  const [modalLoadingIsOpen, setModalLoadingIsOpen] = useState<boolean>(true)
+
   const { id } = useParams<{ id: any }>()
 
   useEffect(() => {
@@ -21,6 +26,7 @@ export function Article() {
         )
 
         setArticle(OneArticle)
+        setModalLoadingIsOpen(false)
       } catch (error) {
         ToastService.error('Erro ao buscar artigo, tente novamente mais tarde')
       }
@@ -30,6 +36,11 @@ export function Article() {
 
   return (
     <>
+      <GenericModal isOpen={modalLoadingIsOpen}>
+        <ModalContentLoading>
+          <h2>Carregando...</h2>
+        </ModalContentLoading>
+      </GenericModal>
       <S.Container>
         <S.ContentNotices>
           <S.NewsTitle> {article.title}</S.NewsTitle>
