@@ -8,7 +8,6 @@ export const CategoryService = {
   update,
   del,
   getById,
-  remove,
 }
 
 async function getAll() {
@@ -25,10 +24,6 @@ async function update({ data, id }: any) {
 
 async function del(data: any) {
   return HttpService.delete(`${basePath}/${data}`)
-}
-
-async function remove(id: any) {
-  return HttpService.post(`${basePath}/remove/${id}`)
 }
 
 async function getById(id: any) {

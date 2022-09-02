@@ -18,12 +18,6 @@ import { ToastService } from 'services/toast.service'
 import * as S from './styles'
 import { EditArticleSchema } from './validations'
 
-interface ArticleDefault {
-  title: string
-  preview: string
-  content: string
-}
-
 export default function EditArticle() {
   const [fileName, setFileName] = useState(null)
   const [article, setArticle] = useState<any>()
@@ -40,39 +34,48 @@ export default function EditArticle() {
     formState: { errors },
   } = useForm<ArticlesInput>({ resolver: yupResolver(EditArticleSchema) })
 
-  const onSubmit = async (data: ArticlesInput) => {
+  const onSubmit = async (values: ArticlesInput) => {
     try {
+      setModalLoadingIsOpen(true)
+
       const articleFormData = new FormData()
 
-      articleFormData.append('title', data.title)
-      articleFormData.append('preview', data.preview)
-      articleFormData.append('content', data.content)
-      articleFormData.append('category_id', data.category.id)
-      articleFormData.append('file', data.file[0])
+      articleFormData.append('title', values.title)
+      articleFormData.append('preview', values.preview)
+      articleFormData.append('content', values.content)
+      articleFormData.append('category_id', values.category.id)
+      articleFormData.append('file', values.file[0])
 
-      await ArticlesService.insert(articleFormData)
+      await ArticlesService.update(articleFormData) // chamo meu service de put passando o dado q desejo enviar a API
 
-      ToastService.success('Artigo criado com sucesso')
+      ToastService.success('Artigo editado com sucesso') // chamo meu toast service de sucesso passando a mensagem q desejo exibir
+      setModalLoadingIsOpen(false)
+
       setTimeout(() => {
         history.push('/admin-articles')
       }, 3000)
     } catch (error) {
-      ToastService.error('Erro ao criar artigo ,tente novamente mais tarde')
+      ToastService.error('Erro ao editar artigo ,tente novamente mais tarde') // chamo meu toast service de erro  passando a mensagem q desejo exibir
+      setModalLoadingIsOpen(false)
     }
   }
 
   useEffect(() => {
     async function oneArticle() {
+      /*
+      Nesse caso eu encapsulo dentro de um (try,catch) pois minha chamada a API pode dar erro e eu preciso estar preparado para isso, 
+      se cair no catch chamo meu toast service de error e exibo ao usuário  */
       try {
         const splitedId = id.split(':')[1]
 
         const OneArticle = await ArticlesService.getById(splitedId).then(
           (response: any) => response
-        )
+        ) // chamo meu service getById passando meu splitedId(id do dado que quero buscar na API)
 
-        setArticle(OneArticle)
+        setArticle(OneArticle) // seto no state esse dado recebido da API
+        setModalLoadingIsOpen(false)
       } catch (error) {
-        ToastService.error('Erro ao buscar artigo, tente novamente mais tarde')
+        ToastService.error('Erro ao buscar artigo, tente novamente mais tarde') // chamo meu toast service de erro em caso de falha na requisição
       }
     }
     oneArticle()

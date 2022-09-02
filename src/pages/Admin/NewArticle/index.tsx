@@ -31,24 +31,29 @@ export default function NewArticles() {
     formState: { errors },
   } = useForm<ArticlesInput>({ resolver: yupResolver(NewArticleSchema) })
 
-  const onSubmit = async (data: ArticlesInput) => {
+  const onSubmit = async (values: ArticlesInput) => {
     try {
+      setModalLoadingIsOpen(true)
+
       const articleFormData = new FormData()
 
-      articleFormData.append('title', data.title)
-      articleFormData.append('preview', data.preview)
-      articleFormData.append('content', data.content)
-      articleFormData.append('category_id', data.category.id)
-      articleFormData.append('file', data.file[0])
+      articleFormData.append('title', values.title)
+      articleFormData.append('preview', values.preview)
+      articleFormData.append('content', values.content)
+      articleFormData.append('category_id', values.category.id)
+      articleFormData.append('file', values.file[0])
 
-      await ArticlesService.insert(articleFormData)
+      await ArticlesService.insert(articleFormData) // chamo meu service de post passando o dado q desejo enviar a API
 
-      ToastService.success('Artigo criado com sucesso')
+      ToastService.success('Artigo criado com sucesso') // chamo meu service de sucesso passando a mensagem q desejo exibir
+      setModalLoadingIsOpen(false)
+
       setTimeout(() => {
         history.push('/admin-articles')
       }, 3000)
     } catch (error) {
-      ToastService.error('Erro ao criar artigo ,tente novamente mais tarde')
+      ToastService.error('Erro ao criar artigo ,tente novamente mais tarde') // chamo meu service de erro  passando a mensagem q desejo exibir
+      setModalLoadingIsOpen(false)
     }
   }
 

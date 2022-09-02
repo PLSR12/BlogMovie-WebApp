@@ -1,6 +1,7 @@
 import { HttpService } from './http.service'
+// importo meu http service o qual é o meu "arquivo principal", aonde tenho os interceptors e o create da api
 
-const basePath = '/article'
+const basePath = '/article' // aqui passo o 'endereço' de onde irei fazer as req na api
 
 export const ArticlesService = {
   getAll,
@@ -8,9 +9,9 @@ export const ArticlesService = {
   update,
   del,
   getById,
-  remove,
-}
+} // aqui exporto meus serviços para chamar no pages
 
+// aqui estão meus serviços, que são as requests na API metodos(get,post,put,delete)
 async function getAll() {
   return HttpService.get(basePath)
 }
@@ -25,10 +26,6 @@ async function update({ data, id }: any) {
 
 async function del(data: any) {
   return HttpService.delete(`${basePath}/${data}`)
-}
-
-async function remove(id: any) {
-  return HttpService.post(`${basePath}/remove/${id}`)
 }
 
 async function getById(id: any) {

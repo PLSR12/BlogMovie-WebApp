@@ -32,15 +32,18 @@ export default function ListArticles() {
 
   useEffect(() => {
     async function loadArticle() {
+      /*
+      Nesse caso eu encapsulo dentro de um (try,catch) pois minha chamada a API pode dar erro e eu preciso estar preparado para isso, 
+      se cair no catch chamo meu toast service de error e exibo ao usuário  */
       try {
         const allArticles = await ArticlesService.getAll().then(
           (response: any) => response
-        )
+        ) // chamo meu service de get
 
-        setArticles(allArticles)
+        setArticles(allArticles) // seto no state esse dado recebido da API
         setModalLoadingIsOpen(false)
       } catch (error) {
-        ToastService.error('Erro ao listar Artigos,tente novamente mais tarde')
+        ToastService.error('Erro ao listar Artigos,tente novamente mais tarde') // chamo meu toast service de erro em caso de falha na requisição
       }
     }
     loadArticle()
@@ -55,9 +58,9 @@ export default function ListArticles() {
   }
 
   const handleModalConfirmDeleteYes = async () => {
-    const id = articleSelected
+    const id = articleSelected // o id do dado que desejo apagar
 
-    ArticlesService.del(id)
+    ArticlesService.del(id) // chamo meu service de delete, passando o id do dado que desejo apagar
 
     setTimeout(() => {
       setModalConfirmDeleteIsOpen(false)

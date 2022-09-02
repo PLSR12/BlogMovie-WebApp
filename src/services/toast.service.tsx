@@ -8,7 +8,7 @@ const ToastService = {
   warn,
   normal,
   dark,
-}
+} // exporto meu serviços de Toast
 
 const options: ToastOptions = {
   position: 'top-right',
@@ -18,8 +18,10 @@ const options: ToastOptions = {
   pauseOnHover: true,
   draggable: true,
   progress: undefined,
-}
+} /* configuro meu toast, como posição do toast,tempo de fechamento e etc... 
+Pode ser encontardo mais opções na documentação .*/
 
+// tenho os serviços de toast para chamar de acordo com os casos de uso
 function success(message: string) {
   toast.success(message, options)
 }
