@@ -10,9 +10,9 @@ export const ComponentButton = styled.button`
   color: #eeeeee;
 
   &:hover {
-    opacity: 0.5;
+    opacity: 0.7;
   }
   &:active {
-    opacity: 0.8;
+    opacity: 0.6;
   }
 `
