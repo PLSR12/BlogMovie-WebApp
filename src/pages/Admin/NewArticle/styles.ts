@@ -1,7 +1,30 @@
 import { Button } from 'components/Atoms/Button'
 import styled from 'styled-components'
 
-export const Container = styled.div``
+export const Container = styled.div`
+  .dropzone {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+    margin-top: 25px;
+    border-width: 2px;
+    border-radius: 2px;
+    border: 2px #8f8f8f dashed;
+    border-style: dashed;
+    background-color: #fafafa;
+    color: #bdbdbd;
+    outline: none;
+    transition: border 0.24s ease-in-out;
+    margin-bottom: 25px;
+
+    p {
+      font-size: 15px;
+      color: #000000;
+    }
+  }
+`
 export const Label = styled.p`
   font-size: 15px;
   color: #fff;
@@ -13,7 +36,7 @@ export const ButtonStyle = styled(Button)`
   font-weight: bold;
   font-size: 1.2rem;
   margin-top: 25px;
-  background-color: #2779f5;
+  background: var(--color-primary-first-darker);
 `
 export const LabelUpload = styled.label`
   margin-top: 35px;
