@@ -38,6 +38,7 @@ export default function EditArticle() {
     try {
       setModalLoadingIsOpen(true)
 
+      const splitedId = id.split(':')[1]
       const articleFormData = new FormData()
 
       articleFormData.append('title', values.title)
@@ -99,10 +100,14 @@ export default function EditArticle() {
     loadCategory()
   }, [])
 
+  // verficiar se o default de imagem funcionou
   useEffect(() => {
     setValue('title', article?.title)
     setValue('preview', article?.preview)
     setValue('content', article?.content)
+    setValue('file', article?.url)
+
+    setFileName(article?.path)
   }, [article])
 
   return (
@@ -115,24 +120,43 @@ export default function EditArticle() {
       <S.Container>
         <Organisms.Box>
           <form noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
-            <Atoms.InputComponent
-              text="Titúlo:"
-              register={register}
-              htmlFor="title"
-              error={errors.title}
+            <Controller
+              control={control}
+              name="title"
+              render={({ field }: any) => (
+                <Atoms.InputComponent
+                  label="Titúlo:"
+                  {...field}
+                  error={errors.title}
+                  placeholder="Digite o Titúlo:"
+                />
+              )}
             />
-            <Atoms.TextAreaComponent
-              text="Preview:"
-              register={register}
-              htmlFor="preview"
-              error={errors.preview}
+            <Controller
+              control={control}
+              name="preview"
+              render={({ field }: any) => (
+                <Atoms.TextAreaComponent
+                  {...field}
+                  label="Preview:"
+                  error={errors.preview}
+                  placeholder="Digite a prévia:"
+                />
+              )}
             />
-            <Atoms.TextAreaComponent
-              text="Contéudo:"
-              register={register}
-              htmlFor="content"
-              error={errors.content}
+            <Controller
+              control={control}
+              name="content"
+              render={({ field }: any) => (
+                <Atoms.TextAreaComponent
+                  label="Contéudo:"
+                  {...field}
+                  error={errors.content}
+                  placeholder="Digite o contéudo:"
+                />
+              )}
             />
+
             <div>
               <S.LabelUpload>
                 {fileName || (
