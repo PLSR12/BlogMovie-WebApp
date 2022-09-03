@@ -1,16 +1,17 @@
-import { useContext, useState, useEffect } from 'react'
-import { ProSidebar, Menu, MenuItem } from 'react-pro-sidebar'
+import { useContext, useEffect, useState } from 'react'
+import { Menu, MenuItem, ProSidebar } from 'react-pro-sidebar'
 import { Link, useHistory } from 'react-router-dom'
 
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks'
+import LogoutIcon from '@mui/icons-material/Logout'
 import 'react-pro-sidebar/dist/css/styles.css'
 import { SideBarNavContext } from '../../../context/sideBarNavContext'
 import { IconToogleSidebar, IconToogleSidebarActive } from '../../Atoms/Icons'
-import LibraryBooksIcon from '@mui/icons-material/LibraryBooks'
 
 import {
-  ContainerSideNav,
-  ContainerButtonToogle,
   ButtonToogleSidebar,
+  ContainerButtonToogle,
+  ContainerSideNav,
   HeaderSidebar,
 } from './styles'
 
@@ -58,7 +59,10 @@ export function SideMenuAdmin() {
             </MenuItem>
           ))}
         </Menu>
-        <button onClick={() => logout()}> LOGOUT </button>
+        <button className="btn-logout" onClick={() => logout()}>
+          {' '}
+          <LogoutIcon />
+        </button>
       </ProSidebar>
     </ContainerSideNav>
   )

@@ -5,25 +5,31 @@ import { IconDashboard } from '../../Atoms/Icons'
 import FiberNewIcon from '@mui/icons-material/FiberNew'
 import NewspaperIcon from '@mui/icons-material/Newspaper'
 
+const logout = async () => {
+  await localStorage.removeItem('blogmovie:userData')
+}
 export const navBar = {
   menu: [
     {
       icon: NewspaperIcon,
       pathname: 'admin-articles',
-      label: 'Listar Notícias',
+      label: 'Listar Artigos',
       link: paths.AdminArticles,
+      action: () => {},
     },
     {
       icon: FiberNewIcon,
       pathname: 'new-article',
-      label: 'Nova Notícia',
+      label: 'Novo Artigo',
       link: paths.NewArticles,
+      action: () => {},
     },
     {
       icon: IconDashboard,
       pathname: 'new-category',
       label: 'Nova Categoria',
       link: paths.NewCategories,
+      action: () => {},
     },
   ],
 }

@@ -1,47 +1,52 @@
 import styled from 'styled-components'
 
-export const Container = styled.label``
+export const Container = styled.div`
+  label {
+    display: block;
+    padding: 0 0 8px 0;
+    font-family: var(--font-system-primary);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-neutral-black);
+    letter-spacing: 0em;
+    text-align: left;
+    margin-top: 20px;
+  }
+  input {
+    height: 38px;
+    width: 100%;
+    padding: 14px 12px;
+    border-radius: var(--border-radius-small);
+    border: 1px solid #ced4da;
 
-export const Label = styled.p`
-  padding: 0 0 4px 8px;
-  color: var(--color-neutral-500);
-  font-family: var(--font-system-primary);
-  font-size: var(--font-size-small);
-  font-weight: var(--font-weight-standard);
-  letter-spacing: 0em;
-  text-align: left;
-`
+    overflow: hidden;
+    text-overflow: ellipsis;
 
-export const InputDefault = styled.input`
-  height: 48px;
-  width: 100%;
-  padding: 14px 12px;
-  border-radius: var(--border-radius-small);
-  border: 1px solid var(--color-neutral-500);
+    font-size: var(--font-size-medium);
 
-  overflow: hidden;
-  text-overflow: ellipsis;
+    &:hover::placeholder {
+      color: var(--color-neutral-500);
+    }
 
-  font-size: var(--font-size-medium);
+    &:hover {
+      border-color: var(--color-neutral-black);
+    }
 
-  &:hover::placeholder {
-    color: var(--color-neutral-500);
+    &::placeholder {
+      color: var(--color-neutral-400);
+    }
+
+    &:focus {
+      border: var(--border-width-small) solid var(--color-neutral-black);
+    }
+
+    &:disabled {
+      background-color: #dcd4d4;
+    }
   }
 
-  &:hover {
-    border-color: var(--color-neutral-black);
+  div {
+    color: var(--color-primary-first-light);
+    margin: 5px 0 0 5px;
   }
-
-  &::placeholder {
-    color: var(--color-neutral-400);
-  }
-
-  &:focus {
-    border: var(--border-width-small) solid var(--color-neutral-black);
-  }
-`
-
-export const Error = styled.div`
-  color: var(--color-primary-first-light);
-  margin: 5px 0 0 5px;
 `

@@ -7,6 +7,15 @@ export const ContainerSideNav = styled.div<{
   transition: all 0.5s ease;
   margin-right: ${(props) => (props.collapsed ? '96px' : '200px')};
 
+  .btn-logout {
+    border: none;
+    background: none;
+    color: white;
+    margin-top: 35px;
+    align-items: center;
+    justify-content: center;
+  }
+
   .pro-sidebar {
     position: fixed;
     width: 200px;
@@ -14,7 +23,7 @@ export const ContainerSideNav = styled.div<{
   }
 
   .pro-sidebar-inner {
-    background: #2779f5;
+    background: var(--color-primary-first-darker);
     max-width: 200px;
   }
 
@@ -33,7 +42,7 @@ export const ContainerSideNav = styled.div<{
     color: #f5ebdc;
 
     &:hover {
-      background: gray;
+      background: var(--color-neutral-black);
     }
 
     a {
@@ -47,7 +56,7 @@ export const ContainerSideNav = styled.div<{
   .pro-menu-item.active.displayColapsed > .pro-inner-item,
   .pro-menu-item.active > .pro-inner-item {
     a {
-      color: gray;
+      color: var(--color-neutral-black);
     }
 
     &::after {
@@ -57,7 +66,7 @@ export const ContainerSideNav = styled.div<{
       height: 28px;
       right: 0;
       border-radius: var(--border-radius-medium);
-      background: gray;
+      background: var(--color-neutral-black);
     }
   }
 
@@ -87,7 +96,7 @@ export const ContainerSideNav = styled.div<{
     .pro-icon-wrapper {
       svg {
         path {
-          fill: gray;
+          fill: var(--color-neutral-black);
         }
       }
     }
