@@ -13,7 +13,7 @@ export const ButtonStyle = styled(Button)`
   font-weight: bold;
   font-size: 1.2rem;
   margin-top: 25px;
-  background-color: #2779f5;
+  background: var(--color-primary-first-darker);
 `
 export const LabelUpload = styled.label`
   margin-top: 35px;
