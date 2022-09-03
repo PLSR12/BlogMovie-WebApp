@@ -12,7 +12,7 @@ import ReactSelect from 'react-select'
 import GenericModal from 'components/Organisms/Modal/GenericModal'
 import { ModalContentLoading } from 'components/Organisms/Modal/style'
 
-import { ArticlesService } from 'services/Articles.service'
+import ArticlesService from 'services/Articles.service'
 import CategoryService from 'services/Categories.service'
 import { ToastService } from 'services/toast.service'
 import * as S from './styles'
@@ -85,23 +85,44 @@ export default function NewArticles() {
       <S.Container>
         <Organisms.Box>
           <form noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
-            <Atoms.InputComponent
-              text="Titúlo:"
-              register={register}
-              htmlFor="title"
-              error={errors.title}
+            <Controller
+              control={control}
+              name="title"
+              render={({ field }: any) => (
+                <Atoms.InputComponent
+                  label="Titúlo:"
+                  {...field}
+                  error={errors.title}
+                  placeholder="Digite o Titúlo:"
+                />
+              )}
+              defaultValue=""
             />
-            <Atoms.TextAreaComponent
-              text="Preview:"
-              register={register}
-              htmlFor="preview"
-              error={errors.preview}
+            <Controller
+              control={control}
+              name="preview"
+              render={({ field }: any) => (
+                <Atoms.TextAreaComponent
+                  {...field}
+                  label="Preview:"
+                  error={errors.preview}
+                  placeholder="Digite a prévia:"
+                />
+              )}
+              defaultValue=""
             />
-            <Atoms.TextAreaComponent
-              text="Contéudo:"
-              register={register}
-              htmlFor="content"
-              error={errors.content}
+            <Controller
+              control={control}
+              name="content"
+              render={({ field }: any) => (
+                <Atoms.TextAreaComponent
+                  label="Contéudo:"
+                  {...field}
+                  error={errors.content}
+                  placeholder="Digite o contéudo:"
+                />
+              )}
+              defaultValue=""
             />
             <div>
               <S.LabelUpload>

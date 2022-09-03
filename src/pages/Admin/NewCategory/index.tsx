@@ -8,7 +8,7 @@ import { ModalContentLoading } from 'components/Organisms/Modal/style'
 
 import { CategoriesInput } from 'models/ICategories'
 import { useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import { useHistory } from 'react-router-dom'
 
 import CategoryService from 'services/Categories.service'
@@ -19,11 +19,12 @@ import { NewCategorySchema } from './validations'
 export default function NewCategories() {
   const [fileName, setFileName] = useState(null)
   const history = useHistory()
-  const [modalLoadingIsOpen, setModalLoadingIsOpen] = useState<boolean>(true)
+  const [modalLoadingIsOpen, setModalLoadingIsOpen] = useState<boolean>(false)
 
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm<CategoriesInput>({ resolver: yupResolver(NewCategorySchema) })
 
@@ -59,11 +60,18 @@ export default function NewCategories() {
       <S.Container>
         <Organisms.Box>
           <form noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
-            <Atoms.InputComponent
-              text="Nome:"
-              register={register}
-              htmlFor="name"
-              error={errors.name}
+            <Controller
+              control={control}
+              name="name"
+              render={({ field }: any) => (
+                <Atoms.InputComponent
+                  label="Nome:"
+                  {...field}
+                  error={errors.name}
+                  placeholder="Digite o nome:"
+                />
+              )}
+              defaultValue=""
             />
             <div>
               <S.LabelUpload>
