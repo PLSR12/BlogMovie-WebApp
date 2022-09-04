@@ -1,2 +1,3 @@
 export { CardArticle } from './CardArticle'
-export { Header } from './Header'
+export { HeaderComponent } from './Header'
+export { Header } from './HeaderAdmin'
