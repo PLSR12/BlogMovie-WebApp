@@ -1,22 +1,50 @@
-import { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
-import { Breadcrumb } from './Breadcrumb'
-import { Container } from './styles'
-import UserConfig from './UserConfig'
+import { useState } from 'react'
+import { Link, NavLink } from 'react-router-dom'
 
-export function Header() {
-  const [isVisible, setIsVisible] = useState<boolean>(false)
+import { FiMenu } from 'react-icons/fi'
 
-  const location = useLocation()
+import * as S from './styles'
 
-  useEffect(() => {
-    setIsVisible(false)
-  }, [location])
+export function HeaderComponent() {
+  const [showNav, setShowNav] = useState(false)
 
   return (
-    <Container>
-      <Breadcrumb />
-      <UserConfig isVisible={isVisible} setIsVisible={setIsVisible} />
-    </Container>
+    <>
+      <S.MainContainer>
+        <S.ContainerLeft>
+          <Link to="/">
+            <h1>BlogMovie</h1>
+          </Link>
+          <S.Nav>
+            <NavLink
+              to="/"
+              activeStyle={{
+                paddingBottom: '6px',
+                borderBottom: '2px solid var(--color-primary-first-darker)',
+              }}
+            >
+              Artigos
+            </NavLink>
+          </S.Nav>
+        </S.ContainerLeft>
+
+        <S.ContainerRight></S.ContainerRight>
+
+        <S.MenuHamburguer>
+          <FiMenu onClick={() => setShowNav(!showNav)} />
+          {showNav && (
+            <nav
+              className={`navHamburguer ${showNav ? 'navTrue' : 'navFalse'}`}
+            >
+              <li>
+                <Link to="/" onClick={() => setShowNav(false)}>
+                  Artigos
+                </Link>
+              </li>
+            </nav>
+          )}
+        </S.MenuHamburguer>
+      </S.MainContainer>
+    </>
   )
 }
