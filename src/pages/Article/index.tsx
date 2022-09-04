@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
+import * as Molecules from 'components/Molecules'
+
 import formatDate from 'common/utils/formatDate'
 import ArticlesService from 'services/Articles.service'
 import { ToastService } from 'services/toast.service'
@@ -41,6 +43,7 @@ export function Article() {
           <h2>Carregando...</h2>
         </ModalContentLoading>
       </GenericModal>
+      <Molecules.HeaderComponent />
       <S.Container>
         <S.ContentNotices>
           <S.NewsTitle> {article.title}</S.NewsTitle>
