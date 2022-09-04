@@ -6,13 +6,14 @@ export const Container = styled.main`
   background-color: #ffffff;
 `
 
-export const CategoriesMenu = styled.article`
+export const CategoriesMenu = styled.div`
   display: flex;
   width: 100%;
   flex-wrap: wrap;
   justify-content: center;
   gap: 5vw;
-  margin-top: 5vh;
+  margin-top: 11vh;
+  padding-top: 25px;
 `
 
 export const CategoryButton = styled.button<{ isActiveBrand: boolean }>`
