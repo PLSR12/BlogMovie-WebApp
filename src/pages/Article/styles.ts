@@ -13,12 +13,14 @@ export const ContentNotices = styled.article`
   align-items: center;
   justify-content: center;
   margin-left: 20%;
+  margin-top: 5%;
   padding: 20px;
 
   @media (max-width: 1024px) {
-    padding-top: 20px;
+    padding-top: 30px;
     width: 90%;
     margin-left: 5%;
+    margin-top: 20%;
   }
 
   .lineDate {
