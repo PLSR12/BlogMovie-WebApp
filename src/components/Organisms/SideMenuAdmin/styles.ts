@@ -7,15 +7,6 @@ export const ContainerSideNav = styled.div<{
   transition: all 0.5s ease;
   margin-right: ${(props) => (props.collapsed ? '96px' : '200px')};
 
-  .btn-logout {
-    border: none;
-    background: none;
-    color: white;
-    margin-top: 35px;
-    align-items: center;
-    justify-content: center;
-  }
-
   .pro-sidebar {
     position: fixed;
     width: 200px;

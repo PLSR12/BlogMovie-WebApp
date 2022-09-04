@@ -3,7 +3,6 @@ import { Menu, MenuItem, ProSidebar } from 'react-pro-sidebar'
 import { Link, useHistory } from 'react-router-dom'
 
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks'
-import LogoutIcon from '@mui/icons-material/Logout'
 import 'react-pro-sidebar/dist/css/styles.css'
 import { SideBarNavContext } from '../../../context/sideBarNavContext'
 import { IconToogleSidebar, IconToogleSidebarActive } from '../../Atoms/Icons'
@@ -12,7 +11,7 @@ import {
   ButtonToogleSidebar,
   ContainerButtonToogle,
   ContainerSideNav,
-  HeaderSidebar,
+  HeaderSidebar
 } from './styles'
 
 import { navBar } from './menu-list'
@@ -59,10 +58,6 @@ export function SideMenuAdmin() {
             </MenuItem>
           ))}
         </Menu>
-        <button className="btn-logout" onClick={() => logout()}>
-          {' '}
-          <LogoutIcon />
-        </button>
       </ProSidebar>
     </ContainerSideNav>
   )
