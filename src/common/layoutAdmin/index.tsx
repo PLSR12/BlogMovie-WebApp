@@ -5,7 +5,7 @@ import * as Organisms from 'components/Organisms'
 
 import { Body, Container, ContainerPage } from './styles'
 
-export default function Layout({ children }: { children?: ReactNode }) {
+export default function LayoutAdmin({ children }: { children?: ReactNode }) {
   return (
     <Container>
       <Organisms.SideMenuAdmin />
