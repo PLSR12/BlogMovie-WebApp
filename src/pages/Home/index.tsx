@@ -82,6 +82,8 @@ export function Home({ state }: any) {
         </ModalContentLoading>
       </GenericModal>
       <S.Container>
+        <Molecules.HeaderComponent />
+
         <S.CategoriesMenu>
           {categories &&
             categories.map((category: { id: any; name: string }) => (
