@@ -3,14 +3,14 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload'
 import * as Atoms from 'components/Atoms'
 import * as Organisms from 'components/Organisms'
 import { ArticlesInput } from 'models/IArticles'
-import { CategoriesAll } from 'models/ICategories'
 import { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { useHistory, useParams } from 'react-router-dom'
-import ReactSelect from 'react-select'
 
 import GenericModal from 'components/Organisms/Modal/GenericModal'
 import { ModalContentLoading } from 'components/Organisms/Modal/style'
+
+import { CategoriesOptions } from 'models/ICategories'
 
 import { ArticlesService } from 'services/Articles.service'
 import CategoryService from 'services/Categories.service'
@@ -21,7 +21,7 @@ import { EditArticleSchema } from './validations'
 export default function EditArticle() {
   const [fileName, setFileName] = useState(null)
   const [article, setArticle] = useState<any>()
-  const [categories, setCategories] = useState<CategoriesAll[]>()
+  const [categories, setCategories] = useState<CategoriesOptions[]>([])
   const [modalLoadingIsOpen, setModalLoadingIsOpen] = useState<boolean>(true)
   const history = useHistory()
   const { id } = useParams<{ id: any }>()
@@ -44,7 +44,7 @@ export default function EditArticle() {
       articleFormData.append('title', values.title)
       articleFormData.append('preview', values.preview)
       articleFormData.append('content', values.content)
-      articleFormData.append('category_id', values.category.id)
+      articleFormData.append('category_id', values.category)
       articleFormData.append('file', values.file[0])
 
       await ArticlesService.update({ data: articleFormData, id: splitedId }) // chamo meu service de put passando o dado q desejo enviar a API
@@ -89,8 +89,18 @@ export default function EditArticle() {
           (response: any) => response
         )
 
-        setCategories(allCategories)
-        setModalLoadingIsOpen(false)
+        allCategories.map((category: { name: string; id: number }) => {
+          const categroyId = category.id
+          const categoryLabel = category.name
+
+          const categoryOption = {
+            id: `${categroyId}`,
+            label: `${categoryLabel}`,
+          }
+
+          setCategories((prevState: any) => [...prevState, categoryOption])
+          setModalLoadingIsOpen(false)
+        })
       } catch (error) {
         ToastService.error(
           'Erro ao buscar as Categorias,tente novamente mais tarde'
@@ -105,8 +115,9 @@ export default function EditArticle() {
     setValue('preview', article?.preview)
     setValue('content', article?.content)
     setValue('file', article?.url)
+    setValue('category', article?.category_id)
     setFileName(article?.path)
-  }, [article])
+  }, [article, categories])
 
   return (
     <>
@@ -176,27 +187,12 @@ export default function EditArticle() {
               </Organisms.ErrorMessage>
             </div>
             <div>
-              <Controller
-                name="category"
-                control={control}
-                render={({ field }) => {
-                  return (
-                    <ReactSelect
-                      {...field}
-                      options={categories}
-                      getOptionLabel={(ctg: { id: any; name: string }) =>
-                        ctg.name
-                      }
-                      getOptionValue={(ctg: { id: any }) => ctg.id}
-                      placeholder="Escolha uma categoria"
-                      defaultValue={article?.category_id}
-                    />
-                  )
-                }}
-              ></Controller>
-              <Organisms.ErrorMessage>
-                {errors.category?.message}
-              </Organisms.ErrorMessage>
+              <Atoms.SelectComponent
+                label={'Selecione uma Categoria:'}
+                options={categories}
+                {...register('category')}
+                error={errors.category}
+              />
             </div>
             <S.ButtonStyle type="submit"> Editar Artigo </S.ButtonStyle>
           </form>

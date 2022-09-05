@@ -3,15 +3,14 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload'
 import * as Atoms from 'components/Atoms'
 import * as Organisms from 'components/Organisms'
 import { ArticlesInput } from 'models/IArticles'
-import { CategoriesAll } from 'models/ICategories'
 import { useEffect, useState } from 'react'
-import { Controller, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { useHistory } from 'react-router-dom'
-import ReactSelect from 'react-select'
 
 import GenericModal from 'components/Organisms/Modal/GenericModal'
 import { ModalContentLoading } from 'components/Organisms/Modal/style'
 
+import { CategoriesOptions } from 'models/ICategories'
 import ArticlesService from 'services/Articles.service'
 import CategoryService from 'services/Categories.service'
 import { ToastService } from 'services/toast.service'
@@ -20,7 +19,7 @@ import { NewArticleSchema } from './validations'
 
 export default function NewArticles() {
   const [fileName, setFileName] = useState(null)
-  const [categories, setCategories] = useState<CategoriesAll[]>()
+  const [categories, setCategories] = useState<CategoriesOptions[]>([])
   const [modalLoadingIsOpen, setModalLoadingIsOpen] = useState<boolean>(true)
   const history = useHistory()
 
@@ -40,7 +39,7 @@ export default function NewArticles() {
       articleFormData.append('title', values.title)
       articleFormData.append('preview', values.preview)
       articleFormData.append('content', values.content)
-      articleFormData.append('category_id', values.category.id)
+      articleFormData.append('category_id', values.category)
       articleFormData.append('file', values.file[0])
 
       await ArticlesService.insert(articleFormData) // chamo meu service de post passando o dado q desejo enviar a API
@@ -64,8 +63,18 @@ export default function NewArticles() {
           (response: any) => response
         )
 
-        setCategories(allCategories)
-        setModalLoadingIsOpen(false)
+        allCategories.map((category: { name: string; id: number }) => {
+          const categroyId = category.id
+          const categoryLabel = category.name
+
+          const categoryOption = {
+            id: `${categroyId}`,
+            label: `${categoryLabel}`,
+          }
+
+          setCategories((prevState: any) => [...prevState, categoryOption])
+          setModalLoadingIsOpen(false)
+        })
       } catch (error) {
         ToastService.error(
           'Erro ao buscar as Categorias,tente novamente mais tarde'
@@ -85,45 +94,30 @@ export default function NewArticles() {
       <S.Container>
         <Organisms.Box>
           <form noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
-            <Controller
-              control={control}
+            <Atoms.InputComponent
+              label="Titúlo:"
+              {...register('title')}
               name="title"
-              render={({ field }: any) => (
-                <Atoms.InputComponent
-                  label="Titúlo:"
-                  {...field}
-                  error={errors.title}
-                  placeholder="Digite o Titúlo:"
-                />
-              )}
-              defaultValue=""
+              error={errors.title}
+              placeholder="Digite o Titúlo:"
             />
-            <Controller
-              control={control}
+
+            <Atoms.TextAreaComponent
+              {...register('preview')}
               name="preview"
-              render={({ field }: any) => (
-                <Atoms.TextAreaComponent
-                  {...field}
-                  label="Preview:"
-                  error={errors.preview}
-                  placeholder="Digite a prévia:"
-                />
-              )}
-              defaultValue=""
+              label="Preview:"
+              error={errors.preview}
+              placeholder="Digite a prévia:"
             />
-            <Controller
-              control={control}
+
+            <Atoms.TextAreaComponent
+              label="Contéudo:"
+              {...register('content')}
               name="content"
-              render={({ field }: any) => (
-                <Atoms.TextAreaComponent
-                  label="Contéudo:"
-                  {...field}
-                  error={errors.content}
-                  placeholder="Digite o contéudo:"
-                />
-              )}
-              defaultValue=""
+              error={errors.content}
+              placeholder="Digite o contéudo:"
             />
+
             <div>
               <S.LabelUpload>
                 {fileName || (
@@ -145,26 +139,12 @@ export default function NewArticles() {
               </Organisms.ErrorMessage>
             </div>
             <div>
-              <Controller
-                name="category"
-                control={control}
-                render={({ field }) => {
-                  return (
-                    <ReactSelect
-                      {...field}
-                      options={categories}
-                      getOptionLabel={(ctg: { id: any; name: string }) =>
-                        ctg.name
-                      }
-                      getOptionValue={(ctg: { id: any }) => ctg.id}
-                      placeholder="Escolha uma categoria"
-                    />
-                  )
-                }}
-              ></Controller>
-              <Organisms.ErrorMessage>
-                {errors.category?.message}
-              </Organisms.ErrorMessage>
+              <Atoms.SelectComponent
+                label={'Selecione uma Categoria'}
+                options={categories}
+                {...register('category')}
+                error={errors.category}
+              />
             </div>
             <S.ButtonStyle type="submit"> Adicionar Artigo </S.ButtonStyle>
           </form>
