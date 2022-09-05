@@ -5,15 +5,16 @@ export const ContainerCard = styled.div`
   width: 80vw;
   height: 30vh;
   flex-flow: row wrap;
-  border: 2px solid #e8e8e8;
-  margin-top: 20px;
+  border: 2px solid #cacaca;
+  margin-top: 5px;
   border-radius: 5px;
-  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 30%);
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 80%);
   transition: all 0.2s ease-in-out;
   cursor: pointer;
   @media (max-width: 1024px) {
     width: 80vw;
-    height: fit-content;
+    height: max-content;
+    margin-top: 15px;
   }
 `
 export const ContainerImage = styled.div`
@@ -24,8 +25,10 @@ export const ContainerImage = styled.div`
     width: 20vw;
     height: 14vw;
     min-height: max-content;
+    align-items: center;
+    justify-content: center;
     border-radius: 5px;
-    padding: 5px 5px 10px 5px;
+    padding: 5px 5px 5px 5px;
 
     @media (max-width: 1024px) {
       min-width: 77vw;
