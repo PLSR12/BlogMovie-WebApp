@@ -129,7 +129,7 @@ export default function NewArticles() {
                 {fileName || (
                   <>
                     <CloudUploadIcon />
-                    Caregue a imagem da notícia
+                    Caregue a imagem do artigo
                   </>
                 )}
                 <input

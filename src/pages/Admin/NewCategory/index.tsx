@@ -78,7 +78,7 @@ export default function NewCategories() {
                 {fileName || (
                   <>
                     <CloudUploadIcon />
-                    Caregue a imagem da notícia
+                    Caregue a imagem da categoria
                   </>
                 )}
                 <input

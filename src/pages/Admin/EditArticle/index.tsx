@@ -47,7 +47,7 @@ export default function EditArticle() {
       articleFormData.append('category_id', values.category.id)
       articleFormData.append('file', values.file[0])
 
-      await ArticlesService.update(articleFormData) // chamo meu service de put passando o dado q desejo enviar a API
+      await ArticlesService.update({ data: articleFormData, id: splitedId }) // chamo meu service de put passando o dado q desejo enviar a API
 
       ToastService.success('Artigo editado com sucesso') // chamo meu toast service de sucesso passando a mensagem q desejo exibir
       setModalLoadingIsOpen(false)
@@ -100,13 +100,11 @@ export default function EditArticle() {
     loadCategory()
   }, [])
 
-  // verficiar se o default de imagem funcionou
   useEffect(() => {
     setValue('title', article?.title)
     setValue('preview', article?.preview)
     setValue('content', article?.content)
     setValue('file', article?.url)
-
     setFileName(article?.path)
   }, [article])
 
@@ -162,7 +160,7 @@ export default function EditArticle() {
                 {fileName || (
                   <>
                     <CloudUploadIcon />
-                    Caregue a imagem da notícia
+                    Caregue a imagem do artigo
                   </>
                 )}
                 <input
@@ -191,7 +189,7 @@ export default function EditArticle() {
                       }
                       getOptionValue={(ctg: { id: any }) => ctg.id}
                       placeholder="Escolha uma categoria"
-                      defaultValue={article?.category}
+                      defaultValue={article?.category_id}
                     />
                   )
                 }}
@@ -200,7 +198,7 @@ export default function EditArticle() {
                 {errors.category?.message}
               </Organisms.ErrorMessage>
             </div>
-            <S.ButtonStyle type="submit"> Adicionar Artigo </S.ButtonStyle>
+            <S.ButtonStyle type="submit"> Editar Artigo </S.ButtonStyle>
           </form>
         </Organisms.Box>
       </S.Container>
