@@ -1,6 +1,5 @@
 {
   "name": "blogmovie-webapp",
-  "homepage": "https://bk-pricing-dev.burgerking.com.br/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
