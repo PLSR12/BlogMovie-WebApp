@@ -15,7 +15,6 @@ import * as S from './styles'
 export function Article() {
   const [article, setArticle] = useState<any>([])
   const [modalLoadingIsOpen, setModalLoadingIsOpen] = useState<boolean>(true)
-
   const { id } = useParams<{ id: any }>()
 
   useEffect(() => {
