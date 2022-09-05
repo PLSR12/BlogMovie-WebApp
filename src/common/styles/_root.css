@@ -83,8 +83,6 @@
   /*** ----------- TYPOGRAPHY BASE ------------ ***/
   /* ---- FONT-FAMILY ----- */
   --font-system-primary: 'Roboto', sans-serif;
-  --font-brand-primary: 'Flame';
-  --font-brand-secondary: 'Flame Sans' sans-serif;
 
   /* ---- FONT-SIZE ----- */
   --font-size-nano: 10px;
