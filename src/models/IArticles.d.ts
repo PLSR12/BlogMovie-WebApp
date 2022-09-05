@@ -13,11 +13,7 @@ interface ArticlesInput {
   title: string
   preview: string
   content: string
-  category_id: number
-  category: {
-    id: any
-    name: string
-  }
+  category: any
   file: string
 }
 
