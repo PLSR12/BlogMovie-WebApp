@@ -200,7 +200,7 @@ export default function EditArticle() {
                 {errors.category?.message}
               </Organisms.ErrorMessage>
             </div>
-            <S.ButtonStyle type="submit"> Adicionar Noticia </S.ButtonStyle>
+            <S.ButtonStyle type="submit"> Adicionar Artigo </S.ButtonStyle>
           </form>
         </Organisms.Box>
       </S.Container>
