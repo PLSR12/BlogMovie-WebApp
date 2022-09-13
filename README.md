@@ -21,7 +21,7 @@ You can see a video of the project presentation on LinkedIn :wave: [Get in touch
 
 
 ## :house: About the project
-Aplicação completa de uma CMS na área de .
+Aplicação completa de uma CMS na área de filmes e séries.
 
 Para a criação da interface foi utilizado: React com Typescript, styled-components, react-toastify para a criação dos toasts de sucesso ou erro, os react-hooks e useContext, react-router-dom, axios, e a biblioteca yup para fazer a validação dos dados.
 
